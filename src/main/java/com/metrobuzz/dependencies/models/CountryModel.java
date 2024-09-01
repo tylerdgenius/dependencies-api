@@ -1,5 +1,7 @@
 package com.metrobuzz.dependencies.models;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,4 +18,5 @@ public class CountryModel {
     private String currency;
     private String latitude;
     private String longitude;
+    private List<TimeZone> timezones;
 }
