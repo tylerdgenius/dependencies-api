@@ -18,7 +18,7 @@ public class CountryService {
         this.countryRepository = countryRepository;
     }
 
-    public CountryModel geCountryById(String id) {
+    public CountryModel getCountryById(String id) {
        return countryRepository.findById(id).orElse(null);
     }
 

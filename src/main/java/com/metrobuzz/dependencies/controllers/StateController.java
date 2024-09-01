@@ -14,7 +14,6 @@ import com.metrobuzz.dependencies.utilities.Response;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
 @RestController
 @RequestMapping("/states")
 public class StateController {
@@ -24,6 +23,14 @@ public class StateController {
     public StateController(StateService stateService) {
         this.stateService = stateService;
     }
+
+    @GetMapping("/all")
+    public Response<List<StateModel>> getAllStates() {
+        List<StateModel> states = stateService.getStates();
+
+        return new Response<>("Success", HttpStatus.OK.value(), states);
+    }
+    
 
     @GetMapping("/by-country-code/{countryCode}")
     public Response<List<StateModel>> getStatesByCountryCode(@PathVariable String countryCode) {

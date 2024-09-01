@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.metrobuzz.dependencies.models.IndustryModel;
 import com.metrobuzz.dependencies.services.IndustryService;
 import com.metrobuzz.dependencies.utilities.Response;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/industries")
@@ -20,12 +22,14 @@ public class IndustriesController {
         this.industryService = industryService;
     }
 
+    @GetMapping("/all")
     public Response<List<IndustryModel>> getAllIndustries() {
         List<IndustryModel> industries = industryService.getAllIndustries();
 
         return new Response<>("Success", HttpStatus.OK.value(), industries);
     }
-
+    
+    @GetMapping("/single/{id}")
     public Response<IndustryModel> getIndustry(@PathVariable String id) {
         IndustryModel industry = industryService.getIndustryById(id);
 
