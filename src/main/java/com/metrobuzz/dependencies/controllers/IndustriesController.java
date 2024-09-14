@@ -29,8 +29,6 @@ public class IndustriesController {
 
     @GetMapping("/single/{id}")
     public IndustryModel getIndustry(@PathVariable String id) {
-        IndustryModel industry = industryService.getIndustryById(id);
-
-        return industry;
+        return industryService.getIndustryById(id);
     }
 }

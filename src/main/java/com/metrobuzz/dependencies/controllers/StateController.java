@@ -25,17 +25,12 @@ public class StateController {
     }
 
     @GetMapping("/all")
-    public Response<List<StateModel>> getAllStates() {
-        List<StateModel> states = stateService.getStates();
-
-        return new Response<>("Success", HttpStatus.OK.value(), states);
+    public List<StateModel> getAllStates() {
+        return stateService.getStates();
     }
-    
 
     @GetMapping("/by-country-code/{countryCode}")
-    public Response<List<StateModel>> getStatesByCountryCode(@PathVariable String countryCode) {
-        List<StateModel> countries = stateService.getStatesByCountryCode(countryCode);
-
-        return new Response<>("Success", HttpStatus.OK.value(), countries);
+    public List<StateModel> getStatesByCountryCode(@PathVariable String countryCode) {
+        return stateService.getStatesByCountryCode(countryCode);
     }
 }

@@ -22,30 +22,22 @@ public class CitiesController {
     }
 
     @GetMapping("/by-state-code/{stateCode}")
-    public Response<List<CityModel>> getCitiesByStateCode(@PathVariable String stateCode) {
-        List<CityModel> cities = cityService.getCitiesByStateCode(stateCode);
-
-        return new Response<>("Success", HttpStatus.OK.value(), cities);
+    public List<CityModel> getCitiesByStateCode(@PathVariable String stateCode) {
+        return cityService.getCitiesByStateCode(stateCode);
     }
 
     @GetMapping("/by-country-code/{countryCode}")
-    public Response<List<CityModel>> getCitiesByCountryCode(@PathVariable String countryCode) {
-        List<CityModel> cities = cityService.getCitiesByCountryCode(countryCode);
-
-        return new Response<>("Success", HttpStatus.OK.value(), cities);
+    public List<CityModel> getCitiesByCountryCode(@PathVariable String countryCode) {
+        return cityService.getCitiesByCountryCode(countryCode);
     }
 
     @GetMapping("/single/{id}")
-    public Response<CityModel> getCity(@PathVariable String id) {
-        CityModel city = cityService.getCityById(id);
-
-        return new Response<>("Success", HttpStatus.OK.value(), city);
+    public CityModel getCity(@PathVariable String id) {
+        return cityService.getCityById(id);
     }
 
     @GetMapping("/all")
-    public Response<List<CityModel>> getCountries() {
-        List<CityModel> cities = cityService.getAllCities();
-
-        return new Response<>("Success", HttpStatus.OK.value(), cities);
+    public List<CityModel> getCountries() {
+        return cityService.getAllCities();
     }
 }

@@ -36,7 +36,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
         byte[] byteArray = byteArrayOutputStream.toByteArray();
 
         if (isTextResponse() || isApplicationJson()) {
-            PrintWriter writer = this.httpServletResponse.getWriter();
+            PrintWriter servletWriter = this.httpServletResponse.getWriter();
 
             String str = new String(byteArray, StandardCharsets.UTF_8);
 
@@ -47,8 +47,8 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 
             String serializedResponse = objectMapper.writeValueAsString(customResponse);
 
-            writer.write(serializedResponse);
-            writer.close();
+            servletWriter.write(serializedResponse);
+            servletWriter.close();
         } else {
             ServletOutputStream finalOutputStream = this.httpServletResponse.getOutputStream();
             finalOutputStream.write(byteArray);
@@ -84,7 +84,6 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 
     @Override
     public ServletOutputStream getOutputStream() {
-        System.out.println("Hello");
 
         if (this.servletOutputStream == null) {
             this.servletOutputStream = new ServletOutputStream() {

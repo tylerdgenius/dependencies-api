@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @RestController
 @RequestMapping("/countries")
 public class CountryController {
@@ -23,16 +22,12 @@ public class CountryController {
     }
 
     @GetMapping("/all")
-    public Response<List<CountryModel>> getCountries() {
-        List<CountryModel> countries = countryService.getAllCountries();
-
-        return new Response<>("Success", HttpStatus.OK.value(), countries);
+    public List<CountryModel> getCountries() {
+        return countryService.getAllCountries();
     }
 
     @GetMapping("/single/{id}")
-    public Response<CountryModel> getCountry(@PathVariable String id) {
-        CountryModel country = countryService.getCountryById(id);
-
-        return new Response<>("Success", HttpStatus.OK.value(), country);
+    public CountryModel getCountry(@PathVariable String id) {
+        return countryService.getCountryById(id);
     }
 }
