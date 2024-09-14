@@ -2,11 +2,9 @@ package com.metrobuzz.dependencies.controllers;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.metrobuzz.dependencies.services.CountryService;
-import com.metrobuzz.dependencies.utilities.Response;
 import com.metrobuzz.dependencies.models.CountryModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
