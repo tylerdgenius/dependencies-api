@@ -3,7 +3,7 @@ package com.metrobuzz.dependencies.wrappers;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.metrobuzz.dependencies.utilities.Response;
+import com.metrobuzz.dependencies.models.Response;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.WriteListener;

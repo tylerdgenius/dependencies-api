@@ -1,4 +1,4 @@
-package com.metrobuzz.dependencies.utilities;
+package com.metrobuzz.dependencies.models;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
