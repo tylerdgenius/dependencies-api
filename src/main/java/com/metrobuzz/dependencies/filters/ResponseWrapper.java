@@ -1,4 +1,4 @@
-package com.metrobuzz.dependencies.wrappers;
+package com.metrobuzz.dependencies.filters;
 
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 
@@ -57,11 +57,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
     public String getMessage(int code) {
         String message = Integer.toString(code);
 
-        if (message.contains("20")) {
-            return "Successfully treated your request";
-        }
-
-        return "Unable to proceeed with your request";
+        return message.contains("20") ? "Successfully treated your request" : "Unable to proceeed with your request";
     }
 
     public boolean isApplicationJson() {
@@ -81,8 +77,6 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 
     @Override
     public PrintWriter getWriter() throws IOException {
-        System.out.println("Called");
-
         if (this.writer == null) {
             this.writer = new PrintWriter(byteArrayOutputStream, true);
         }

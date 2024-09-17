@@ -26,6 +26,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleNotFoundException(Exception exception, WebRequest request) {
         ErrorResponse response = new ErrorResponse(this.getStackTrace(exception), exception.getMessage());
 
+        String errorMessage = exception.getMessage() != null ? exception.getMessage()
+                : "A critical error has occurred while performing your request";
+
+        response.setErrorMessage(errorMessage);
+
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
