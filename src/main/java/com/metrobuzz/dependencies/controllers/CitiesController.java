@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.metrobuzz.dependencies.exceptions.ResourceNotFoundException;
 import com.metrobuzz.dependencies.models.CityModel;
 import com.metrobuzz.dependencies.services.CityService;
 
@@ -31,7 +32,13 @@ public class CitiesController {
 
     @GetMapping("/single/{id}")
     public CityModel getCity(@PathVariable String id) {
-        return cityService.getCityById(id);
+        CityModel city = cityService.getCityById(id);
+
+        if (city == null) {
+            throw new ResourceNotFoundException("Unable to find city");
+        }
+
+        return city;
     }
 
     @GetMapping("/all")

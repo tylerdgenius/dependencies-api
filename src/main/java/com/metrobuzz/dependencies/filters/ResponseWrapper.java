@@ -2,7 +2,11 @@ package com.metrobuzz.dependencies.filters;
 
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.metrobuzz.dependencies.constants.ResponseConstants;
+import com.metrobuzz.dependencies.models.CustomResponse;
 import com.metrobuzz.dependencies.models.Response;
 
 import jakarta.servlet.ServletOutputStream;
@@ -13,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponseWrapper;
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 public class ResponseWrapper extends HttpServletResponseWrapper {
 
@@ -20,6 +25,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
     private PrintWriter writer;
     private ServletOutputStream servletOutputStream;
     private HttpServletResponse httpServletResponse;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public ResponseWrapper(HttpServletResponse response) {
         super(response);
@@ -29,8 +35,6 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 
     public void serveContent() throws IOException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
-
         byte[] byteArray = byteArrayOutputStream.toByteArray();
 
         if (isTextResponse() || isApplicationJson()) {
@@ -38,12 +42,23 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 
             String str = new String(byteArray, StandardCharsets.UTF_8);
 
-            Object objectMapped = objectMapper.readValue(str, Object.class);
+            int status = getStatus();
 
-            Response<Object> customResponse = new Response<>(getMessage(httpServletResponse.getStatus()),
-                    httpServletResponse.getStatus(), objectMapped);
+            String message = ResponseConstants.getMessageFromCode(status);
 
-            String serializedResponse = objectMapper.writeValueAsString(customResponse);
+            Object finalResponse;
+
+            if (status >= 400) {
+                String errorMessage = extractErrorMessage(str);
+
+                finalResponse = this.getFinalResponse(status, errorMessage, null);
+            } else {
+                Object objectMapped = objectMapper.readValue(str, Object.class);
+
+                finalResponse = this.getFinalResponse(status, message, objectMapped);
+            }
+
+            String serializedResponse = objectMapper.writeValueAsString(finalResponse);
 
             servletWriter.write(serializedResponse);
             servletWriter.close();
@@ -54,10 +69,34 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
         }
     }
 
-    public String getMessage(int code) {
-        String message = Integer.toString(code);
+    public String extractErrorMessage(String responseBody) {
+        try {
+            @SuppressWarnings("unchecked")
+            Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
+            responseMap.forEach((key, value) -> System.out.println(key));
 
-        return message.contains("20") ? "Successfully treated your request" : "Unable to proceeed with your request";
+            return (String) responseMap.get("errorMessage");
+
+        } catch (IOException exception) {
+            return "An unknown error has occurred";
+        }
+
+    }
+
+    private static void printEntry(String key, String value) {
+        System.out.println(key + ": " + value);
+    }
+
+    public Object getFinalResponse(int code, String message, Object mappedObject) {
+        String statusCode = Integer.toString(code);
+
+        if (statusCode.contains("20")) {
+            return new Response<>(
+                    message,
+                    httpServletResponse.getStatus(), mappedObject);
+        } else {
+            return new CustomResponse(message, code);
+        }
     }
 
     public boolean isApplicationJson() {

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.metrobuzz.dependencies.services.CountryService;
+import com.metrobuzz.dependencies.exceptions.ResourceNotFoundException;
 import com.metrobuzz.dependencies.models.CountryModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,12 @@ public class CountryController {
 
     @GetMapping("/single/{id}")
     public CountryModel getCountry(@PathVariable String id) {
-        return countryService.getCountryById(id);
+        CountryModel country = countryService.getCountryById(id);
+
+        if (country == null) {
+            throw new ResourceNotFoundException("Unable to find this country");
+        }
+
+        return country;
     }
 }

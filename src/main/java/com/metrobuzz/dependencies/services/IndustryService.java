@@ -12,14 +12,14 @@ import com.metrobuzz.dependencies.repositories.IndustryRepository;
 public class IndustryService {
 
     private IndustryRepository industryRepository;
-    
+
     @Autowired
     public IndustryService(IndustryRepository industryRepository) {
         this.industryRepository = industryRepository;
     }
 
     public IndustryModel getIndustryById(String id) {
-       return industryRepository.findById(id).orElse(null);
+        return industryRepository.findById(id).orElse(null);
     }
 
     public List<IndustryModel> getAllIndustries() {

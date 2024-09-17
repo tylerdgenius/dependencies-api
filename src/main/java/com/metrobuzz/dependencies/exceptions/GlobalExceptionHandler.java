@@ -3,7 +3,6 @@ package com.metrobuzz.dependencies.exceptions;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,14 +21,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFoundException(Exception exception, WebRequest request) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResourceNotFoundException exception) {
         ErrorResponse response = new ErrorResponse(this.getStackTrace(exception), exception.getMessage());
-
-        String errorMessage = exception.getMessage() != null ? exception.getMessage()
-                : "A critical error has occurred while performing your request";
-
-        response.setErrorMessage(errorMessage);
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
