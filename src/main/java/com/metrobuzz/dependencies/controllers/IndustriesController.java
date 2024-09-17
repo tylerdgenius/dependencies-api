@@ -1,5 +1,7 @@
 package com.metrobuzz.dependencies.controllers;
 
+import java.io.IOException;
+import java.rmi.ServerException;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.metrobuzz.dependencies.models.IndustryModel;
 import com.metrobuzz.dependencies.services.IndustryService;
+
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
@@ -20,8 +24,9 @@ public class IndustriesController {
     }
 
     @GetMapping("/all")
-    public List<IndustryModel> getAllIndustries() {
-        return industryService.getAllIndustries();
+    public List<IndustryModel> getAllIndustries() throws NotFoundException {
+        throw new NotFoundException();
+        // return industryService.getAllIndustries();
     }
 
     @GetMapping("/single/{id}")

@@ -20,8 +20,6 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
     private PrintWriter writer;
     private ServletOutputStream servletOutputStream;
     private HttpServletResponse httpServletResponse;
-    private boolean writerUsed;
-    private boolean outputStreamUsed;
 
     public ResponseWrapper(HttpServletResponse response) {
         super(response);
@@ -42,7 +40,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 
             Object objectMapped = objectMapper.readValue(str, Object.class);
 
-            Response<Object> customResponse = new Response<>("Success",
+            Response<Object> customResponse = new Response<>(getMessage(httpServletResponse.getStatus()),
                     httpServletResponse.getStatus(), objectMapped);
 
             String serializedResponse = objectMapper.writeValueAsString(customResponse);
@@ -54,6 +52,16 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
             finalOutputStream.write(byteArray);
             finalOutputStream.flush();
         }
+    }
+
+    public String getMessage(int code) {
+        String message = Integer.toString(code);
+
+        if (message.contains("20")) {
+            return "Successfully treated your request";
+        }
+
+        return "Unable to proceeed with your request";
     }
 
     public boolean isApplicationJson() {
