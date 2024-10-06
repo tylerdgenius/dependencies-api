@@ -55,6 +55,8 @@ jobs:
 
       - name: SSH into Server and Deploy
         uses: appleboy/ssh-action@v0.1.9
+        env:
+          CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
@@ -70,9 +72,9 @@ jobs:
               npm install -g pm2
             fi
 
-            if [ "$(docker ps -aq -f name=metrobuzz-deps-container)" ]; then
-              docker stop metrobuzz-deps-container
-              docker rm metrobuzz-deps-container
+            if [ "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
+              docker stop $CONTAINER_NAME || true
+              docker rm $CONTAINER_NAME
             fi
 
             # Pull the latest Docker image and restart the service

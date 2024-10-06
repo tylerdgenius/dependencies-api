@@ -3,7 +3,7 @@ module.exports = {
     {
       name: "vuga-api",
       script: "docker",
-      args: "run --name metrobuzz-deps-container -p 8080:8080 tylerdev24/metrobuzz-deps:latest",
+      args: "run --name ${process.env.CONTAINER_NAME} -p 9000:9000 tylerdev24/metrobuzz-deps:latest",
       watch: false,
       autorestart: true,
       max_restarts: 10,
