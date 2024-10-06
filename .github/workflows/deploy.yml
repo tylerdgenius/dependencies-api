@@ -88,3 +88,4 @@ jobs:
             # Pull the latest Docker image and restart the service
             docker pull ${{ secrets.DOCKER_USERNAME }}/metrobuzz-deps:latest
             pm2 start ecosystem.config.js --update-env
+            docker rm metrobuzz-deps-container
