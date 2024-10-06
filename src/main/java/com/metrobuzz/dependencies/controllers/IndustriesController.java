@@ -2,6 +2,7 @@ package com.metrobuzz.dependencies.controllers;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,10 +11,8 @@ import com.metrobuzz.dependencies.exceptions.ResourceNotFoundException;
 import com.metrobuzz.dependencies.models.IndustryModel;
 import com.metrobuzz.dependencies.services.IndustryService;
 
-import org.springframework.web.bind.annotation.GetMapping;
-
 @RestController
-@RequestMapping("/industries")
+@RequestMapping("/api/industries")
 public class IndustriesController {
     private IndustryService industryService;
 

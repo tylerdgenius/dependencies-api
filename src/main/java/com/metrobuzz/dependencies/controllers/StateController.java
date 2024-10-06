@@ -3,17 +3,16 @@ package com.metrobuzz.dependencies.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.metrobuzz.dependencies.models.StateModel;
 import com.metrobuzz.dependencies.services.StateService;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
 @RestController
-@RequestMapping("/states")
+@RequestMapping("/api/states")
 public class StateController {
     private StateService stateService;
 

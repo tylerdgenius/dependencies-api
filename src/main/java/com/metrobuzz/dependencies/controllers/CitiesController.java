@@ -12,7 +12,7 @@ import com.metrobuzz.dependencies.models.CityModel;
 import com.metrobuzz.dependencies.services.CityService;
 
 @RestController
-@RequestMapping("/cities")
+@RequestMapping("/api/cities")
 public class CitiesController {
     private CityService cityService;
 
