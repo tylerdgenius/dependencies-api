@@ -39,7 +39,7 @@ jobs:
       - name: Create deployment application.properties file
         run: |
           mkdir -p src/main/resources  # Ensure the directory exists
-          echo "spring.data.mongodb.uri=${{ secrets.MONGO_URI }}" >> src/main/resources/application-${{ secrets.APP_ENV }}.properties
+          echo "spring.data.mongodb.uri=${{ secrets.MONGO_URI }}" > src/main/resources/application-${{ secrets.APP_ENV }}.properties
           echo "server.port=${{ secrets.APP_PORT }}" >> src/main/resources/application-${{ secrets.APP_ENV }}.properties
 
       - name: Build Application JAR
