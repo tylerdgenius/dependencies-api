@@ -1,4 +1,4 @@
-name: Build and Deploy Dependencies Api
+name: Build and Deploy Haiyo Production
 
 on:
   push:

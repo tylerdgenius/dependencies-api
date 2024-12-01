@@ -1,4 +1,4 @@
-name: Build and Deploy Haiyo
+name: Build and Deploy Haiyo Staging
 
 on:
   push:
