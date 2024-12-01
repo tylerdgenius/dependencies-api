@@ -1,4 +1,5 @@
-FROM openjdk:17-jdk-alpine
+# FROM openjdk:17-jdk-alpine
+FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
@@ -10,4 +11,4 @@ ENV PORT=$PORT
 
 EXPOSE $PORT
 
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+CMD ["java", "-jar", "/app/app.jar"]
