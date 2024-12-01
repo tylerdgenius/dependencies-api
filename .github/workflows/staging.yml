@@ -47,12 +47,11 @@ jobs:
         run: |
           echo "Application Properties:"
           cat src/main/resources/application-${{ secrets.APP_ENV }}.properties
-          echo "Application Environment: ${{ secrets.APP_ENV }}"
           echo "Application Properties Main:"
           cat src/main/resources/application.properties
 
       - name: Build Application JAR
-        run: ./mvnw clean package
+        run: ./mvnw clean package -Dspring.profiles.active=${{ secrets.APP_ENV }}
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
