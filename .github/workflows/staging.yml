@@ -43,6 +43,14 @@ jobs:
           echo "server.port=${{ secrets.APP_PORT }}" >> src/main/resources/application-${{ secrets.APP_ENV }}.properties
           echo "spring.profiles.active=${{ secrets.APP_ENV }}" >> src/main/resources/application.properties
 
+      - name: Show application.properties details
+        run: |
+          echo "Application Properties:"
+          cat src/main/resources/application-${{ secrets.APP_ENV }}.properties
+          echo "Application Environment: ${{ secrets.APP_ENV }}"
+          echo "Application Properties Main:"
+          cat src/main/resources/application.properties
+
       - name: Build Application JAR
         run: ./mvnw clean package
 
