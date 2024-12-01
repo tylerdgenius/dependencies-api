@@ -1,9 +1,12 @@
 package com.metrobuzz.dependencies.filters;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.metrobuzz.dependencies.constants.ResponseConstants;
 import com.metrobuzz.dependencies.models.CustomResponse;
@@ -13,11 +16,6 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.WriteListener;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpServletResponseWrapper;
-
-import java.io.PrintWriter;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 public class ResponseWrapper extends HttpServletResponseWrapper {
 

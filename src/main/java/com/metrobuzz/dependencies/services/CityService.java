@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.metrobuzz.dependencies.exceptions.ResourceNotFoundException;
 import com.metrobuzz.dependencies.models.CityModel;
 import com.metrobuzz.dependencies.repositories.CityRepository;
 
@@ -12,14 +13,20 @@ import com.metrobuzz.dependencies.repositories.CityRepository;
 public class CityService {
 
     private CityRepository cityRepository;
-    
+
     @Autowired
     public CityService(CityRepository cityRepository) {
         this.cityRepository = cityRepository;
     }
 
     public CityModel getCityById(String id) {
-       return cityRepository.findById(id).orElse(null);
+        CityModel city = cityRepository.findById(id).orElse(null);
+
+        if (city == null) {
+            throw new ResourceNotFoundException("Unable to find city");
+        }
+
+        return city;
     }
 
     public List<CityModel> getAllCities() {

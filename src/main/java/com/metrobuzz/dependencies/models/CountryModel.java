@@ -17,12 +17,13 @@ public class CountryModel {
     public String id;
     private String name;
     private String isoCode;
+    private String phonecode;
     private String flag;
     private String currency;
     private String latitude;
     private String longitude;
     private List<TimeZone> timezones;
-    
+
     @CreatedDate
     private Instant createdAt;
 
