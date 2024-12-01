@@ -17,8 +17,12 @@ jobs:
       - name: Verify secrets
         run: |
           echo "Docker Username: ${DOCKER_USERNAME:0:2}... (truncated)"
+          echo "App Port: ${APP_PORT:0:2}... (truncated)"
+          echo "App Env: ${APP_ENV:0:2}... (truncated)"
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          APP_PORT: ${{ secrets.APP_PORT }}
+          APP_ENV: ${{ secrets.APP_ENV }}
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
