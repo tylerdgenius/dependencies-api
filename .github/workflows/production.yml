@@ -36,23 +36,27 @@ jobs:
           server-password: ${{ secrets.GITHUB_TOKEN }}
           overwrite-settings: true
 
-      - name: Create deployment application.properties file
+      - name: Create deployment application-${{ secrets.APP_ENV }}.properties file
         run: |
           mkdir -p src/main/resources  # Ensure the directory exists
           echo "spring.data.mongodb.uri=${{ secrets.MONGO_URI }}" > src/main/resources/application-${{ secrets.APP_ENV }}.properties
           echo "server.port=${{ secrets.APP_PORT }}" >> src/main/resources/application-${{ secrets.APP_ENV }}.properties
+
+      - name: Create deployment application.properties file
+        run: |
+          mkdir -p src/main/resources  # Ensure the directory exists
+          echo "spring.application.name=${{ secrets.APP_NAME }}" > src/main/resources/application.properties
           echo "spring.profiles.active=${{ secrets.APP_ENV }}" >> src/main/resources/application.properties
 
       - name: Show application.properties details
         run: |
           echo "Application Properties:"
           cat src/main/resources/application-${{ secrets.APP_ENV }}.properties
-          echo "Application Environment: ${{ secrets.APP_ENV }}"
           echo "Application Properties Main:"
           cat src/main/resources/application.properties
 
       - name: Build Application JAR
-        run: ./mvnw clean package -Dspring.profiles.active=${{ secrets.APP_ENV }}
+        run: ./mvnw clean package
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
